@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Mạnh Quân - Kết nối thành công</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #2a080c 0%, #110204 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+        }
+
+        /* Khung bọc tạo hiệu ứng viền xoay động */
+        .border-box {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 24px;
+            padding: 2px; /* Độ dày của viền động */
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Dải ánh sáng xoay tròn phía sau viền */
+        .border-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                #f5c26b, 
+                #e59b20, 
+                #ffffff, 
+                #e59b20, 
+                transparent 40%
+            );
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+            background: rgba(20, 4, 7, 0.94);
+            border-radius: 22px;
+            padding: 28px 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Header thương hiệu */
+        .brand-title {
+            color: #f5c26b;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(245, 194, 107, 0.3);
+            margin-bottom: 4px;
+        }
+
+        .brand-subtitle {
+            color: #d4a373;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* Trạng thái kết nối */
+        .status-box {
+            margin: 15px 0 20px 0;
+        }
+
+        .icon-circle {
+            width: 68px;
+            height: 68px;
+            background: linear-gradient(135deg, rgba(229, 155, 32, 0.2), rgba(229, 155, 32, 0.05));
+            border: 2px solid #e59b20;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            box-shadow: 0 0 20px rgba(229, 155, 32, 0.4);
+        }
+
+        .icon-circle svg {
+            width: 34px;
+            height: 34px;
+            fill: #f5c26b;
+        }
+
+        .status-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .status-desc {
+            font-size: 13px;
+            color: #b3a2a4;
+            line-height: 1.4;
+        }
+
+        /* Danh sách nút hành động */
+        .action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .btn-card {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Nút chính - Facebook */
+        .btn-facebook {
+            background: linear-gradient(135deg, #1877f2 0%, #0d5cb6 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+        }
+
+        .btn-facebook:active {
+            transform: scale(0.98);
+        }
+
+        /* Các nút phụ */
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(229, 155, 32, 0.3);
+        }
+
+        .btn-secondary:active {
+            background: rgba(229, 155, 32, 0.15);
+        }
+
+        .btn-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .btn-icon-fb, .btn-icon-zalo { 
+            background: #ffffff; 
+        }
+
+        .btn-text {
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .btn-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .btn-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* Mũi tên mở rộng */
+        .arrow-icon {
+            color: #f5c26b;
+            font-size: 12px;
+            transition: transform 0.3s ease;
+            margin-left: 8px;
+        }
+
+        /* Tùy chọn ẩn (Nhắn Zalo / Gọi điện) */
+        .sub-options {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 8px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            border: 1px solid rgba(229, 155, 32, 0.2);
+        }
+
+        .sub-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            transition: transform 0.1s;
+        }
+
+        .sub-btn:active {
+            transform: scale(0.96);
+        }
+
+        .sub-btn-zalo {
+            background: #0068FF;
+        }
+
+        .sub-btn-call {
+            background: #34c759;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #7a6366;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="border-box">
+        <div class="container">
+            <!-- Thương hiệu -->
+            <div class="brand-title">SHOP MẠNH QUÂN</div>
+            <div class="brand-subtitle">UY TÍN TẠO THƯƠNG HIỆU</div>
+
+            <!-- Trạng thái Wi-Fi -->
+            <div class="status-box">
+                <div class="icon-circle">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3C7.95 3 4.21 4.64 1.48 7.3L3.07 8.89C5.4 6.62 8.54 5.22 12 5.22C15.46 5.22 18.6 6.62 20.93 8.89L22.52 7.3C19.79 4.64 16.05 3 12 3ZM12 9C9.3 9 6.81 10.1 5 11.87L6.59 13.46C8.01 12.04 9.91 11.22 12 11.22C14.09 11.22 15.99 12.04 17.41 13.46L19 11.87C17.19 10.1 14.7 9 12 9ZM12 15C10.65 15 9.4 15.55 8.5 16.44L12 19.94L15.5 16.44C14.6 15.55 13.35 15 12 15Z"/>
+                    </svg>
+                </div>
+                <div class="status-title">ĐÃ KẾT NỐI WI-FI THÀNH CÔNG!</div>
+                <div class="status-desc">Cảm ơn quý khách đã ghé thăm. Nhấn nút bên dưới để tương tác với cửa hàng.</div>
+            </div>
+
+            <!-- Nút liên kết -->
+            <div class="action-list">
+                <!-- Facebook -->
+                <a href="https://facebook.com/vanbanmobile" class="btn-card btn-facebook">
+                    <div class="btn-icon btn-icon-fb">
+                        <svg width="22" height="22" fill="#1877f2" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </div>
+                    <div class="btn-text">
+                        <span class="btn-label" style="color: rgba(255,255,255,0.85);">Facebook Fanpage</span>
+                        <span class="btn-title">Văn Bạn mobile</span>
+                    </div>
+                </a>
+
+                <!-- Khung Zalo / Hotline chọn 2 tùy chọn -->
+                <div>
+                    <div class="btn-card btn-secondary" onclick="toggleOptions()">
+                        <div class="btn-icon btn-icon-zalo">
+                            <svg width="28" height="28" viewBox="0 0 100 100">
+                                <path d="M 18 22 C 14 22 10 26 10 30 L 10 65 C 10 70 14 74 18 74 L 26 74 L 20 86 L 36 74 L 82 74 C 86 74 90 70 90 65 L 90 30 C 90 26 86 22 82 22 Z" fill="#0068FF"/>
+                                <text x="50" y="58" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="27" fill="#FFFFFF" text-anchor="middle">Zalo</text>
+                            </svg>
+                        </div>
+                        <div class="btn-text">
+                            <span class="btn-label">Zalo / Hotline tư vấn</span>
+                            <span class="btn-title" style="color: #f5c26b;">0975 570 288</span>
+                        </div>
+                        <div class="arrow-icon" id="arrow">▼</div>
+                    </div>
+
+                    <!-- 2 Tùy chọn xổ ra khi bấm -->
+                    <div class="sub-options" id="subOptions">
+                        <a href="https://zalo.me/0975570288" class="sub-btn sub-btn-zalo">
+                            💬 Nhắn Zalo
+                        </a>
+                        <a href="tel:0975570288" class="sub-btn sub-btn-call">
+                            📞 Gọi điện
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Google Maps -->
+                <a href="https://maps.app.goo.gl/Cx4b9uXerQdteY6fA" class="btn-card btn-secondary">
+                    <div class="btn-icon" style="background: #ea4335;">
+                        <svg width="22" height="22" fill="#ffffff" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="btn-text">
+                        <span class="btn-label">Địa chỉ cửa hàng</span>
+                        <span class="btn-title" style="font-size: 13px;">271 Quan Độ - Văn Môn - Bắc Ninh</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Chân trang -->
+            <div class="footer">
+                Shop Mạnh Quân • Uy tín tạo thương hiệu
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleOptions() {
+            var options = document.getElementById('subOptions');
+            var arrow = document.getElementById('arrow');
+            if (options.style.display === 'grid') {
+                options.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                options.style.display = 'grid';
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+</body>
+</html>
